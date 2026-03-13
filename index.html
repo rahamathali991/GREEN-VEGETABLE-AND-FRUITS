@@ -1,0 +1,590 @@
+<<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Green Vegetables & Fruits - Shivamogga</title>
+
+<style>
+/* Body and background */
+body{
+    margin:0;
+    font-family:Verdana, Geneva, Tahoma, sans-serif, sans-serif;
+    background:url(images/background.jpeg);
+    background-size:cover;
+    background-attachment:fixed;
+}
+
+/* Header */
+header{
+    background:#2e7d32;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+/* Navigation buttons */
+nav{
+    background:#1b5e20;
+    padding:10px;
+    text-align:center;
+}
+nav button{
+    margin:5px;
+    padding:8px 15px;
+    border:none;
+    background:white;
+    cursor:pointer;
+    border-radius:5px;
+    transition:0.2s;
+}
+nav button:hover {
+    opacity:0.9;
+    transform:scale(1.05);
+}
+
+/* Search box */
+.search-box{
+    text-align:center;
+    margin:15px;
+}
+.search-box input{
+    width:60%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #2e7d32;
+    font-size:14px;
+    outline:none;
+}
+.search-box input:focus{
+    border-color:#1b5e20;
+    box-shadow:0 0 5px rgba(46,125,50,0.4);
+}
+
+/* Layout: Products left, Cart right */
+.main-container{
+    display:flex;
+    gap:20px;
+    padding:20px;
+}
+
+/* Products area */
+/* Products area */
+/* Products area */
+.products{
+    flex:1;
+    display:grid;
+    grid-auto-flow:column;
+    grid-template-rows:repeat(2, auto);
+    gap:10px;
+    
+    overflow-x:auto;   /* enables horizontal scroll */
+    overflow-y:hidden;
+
+    white-space:nowrap;
+    padding-bottom:10px;
+}
+.products::-webkit-scrollbar{
+    height:8px;
+}
+
+.products::-webkit-scrollbar-thumb{
+    background:#2e7d32;
+    border-radius:10px;
+}
+
+/* Product card */
+/* Product card */
+.product{
+    background:white;
+    width:100px;           /* smaller width */
+    border:2px solid green;
+    padding:5px;           /* less padding */
+    border-radius:6px;
+    text-align:center;
+    font-size:12px;        /* smaller text */
+}
+.products::-webkit-scrollbar{
+    height:6px;
+}
+
+.products::-webkit-scrollbar-thumb{
+    background:#2e7d32;
+    border-radius:10px;
+}
+/* Product image */
+.product img{
+    width:60px;            /* smaller image */
+    height:60px;
+    object-fit:cover;
+    border-radius:5px;
+}
+
+/* Product title */
+.product h3{
+    margin:4px 0;
+    font-size:13px;
+    white-space:normal;
+    word-break:break-word;
+}
+
+/* Price */
+.product p{
+    margin:2px 0;
+    font-size:12px;
+}
+
+/* Quantity input */
+.product input{
+    width:40px;
+    padding:2px;
+    margin-top:3px;
+    text-align:center;
+    font-size:11px;
+}
+
+/* Add button */
+.product button{
+    margin-top:3px;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:3px 6px;
+    font-size:11px;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+.product button:hover{
+    opacity:0.9;
+    transform:scale(1.05);
+}
+
+/* Cart area on right */
+.cart{
+    width:40%; /* Right half */
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    max-height:80vh; /* Optional: max height */
+}
+
+/* Scrollable cart table */
+.cart-table-wrapper{
+    flex:1;
+    overflow-y:auto;
+    margin-bottom:10px;
+}
+
+/* Sticky header */
+.cart-table-wrapper table{
+    width:100%;
+    border-collapse:collapse;
+}
+.cart-table-wrapper thead tr{
+    position:sticky;
+    top:0;
+    background:#2e7d32;
+    color:white;
+    z-index:1;
+}
+
+/* Order button */
+.order-btn{
+    background:green;
+    color:white;
+    padding:10px;
+    width:50%;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.2s;
+}
+.order-btn:hover{
+    opacity:0.9;
+    transform:scale(1.02);
+}
+
+/* Customer details */
+.customer-details {
+    margin-top: 15px;
+}
+.customer-details h3 {
+    margin-bottom:10px;
+    font-size:16px;
+    color:#2e7d32;
+    font-weight:bold;
+}
+.customer-details .row {
+    display:flex;
+    gap:10px;
+    margin-bottom:8px;
+}
+.customer-details input,
+.customer-details textarea {
+    width:100%;
+    padding:8px 10px;
+    border-radius:8px;
+    border:1px solid #2e7d32;
+    font-size:14px;
+    box-sizing:border-box;
+    outline:none;
+}
+.customer-details input:focus,
+.customer-details textarea:focus {
+    border-color:#1b5e20;
+    box-shadow:0 0 5px rgba(46,125,50,0.4);
+}
+.customer-details textarea {
+    resize:none;
+    height:60px;
+    margin-bottom:10px;
+}
+.loading{
+color:#000303;      /* bright yellow */
+font-size:20px;
+font-weight:bold;
+text-align:center;
+width:100%;
+display:block;
+}
+
+/* Responsive for smaller screens */
+@media(max-width:900px){
+    .main-container{
+        flex-direction:column;
+    }
+    .cart{
+        width:100%;
+        max-height:none;
+    }
+}
+.button-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.save-btn{
+    background:#1b5e20;
+    color:white;
+    padding:10px;
+    width:100%;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.order-btn{
+    background:#1b5e20;
+    color:white;
+    padding:10px;
+    width:100%;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.whatsapp-icon{
+    width:22px;
+    height:22px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h2>🌿 GREEN VEGETABLES & FRUITS – SHIVAMOGGA</h2>
+</header>
+
+<nav>
+<button onclick="showCategory('all')">Home</button>
+<button onclick="showCategory('vegetable')">Vegetables</button>
+<button onclick="showCategory('fruit')">Fruits</button>
+<button onclick="showCategory('leafy')">Leafy</button>
+</nav>
+
+<div class="search-box">
+<input type="text" id="search" placeholder="Search items..." onkeyup="searchItems()">
+</div>
+
+<div class="main-container">
+
+<!-- Products on left -->
+<div class="products" id="productList">
+<span class="loading">Loading products...</span>
+</div>
+</div>
+</div>
+
+<!-- Cart on right -->
+<div class="cart">
+<h3>🛒 Cart</h3>
+
+<div class="cart-table-wrapper">
+<table border="1" cellpadding="8" style="text-align:center;">
+<thead>
+<tr>
+<th>Item</th>
+<th>Qty</th>
+<th>Price</th>
+<th>Subtotal</th>
+<th>Remove</th>
+</tr>
+</thead>
+<tbody id="cartTable"></tbody>
+</table>
+</div>
+
+<h3>Total: ₹<span id="total">0</span></h3>
+
+<div class="customer-details">
+<h3>Customer Details</h3>
+<div class="row">
+<input type="text" id="name" placeholder="Customer Name">
+<input type="text" id="phone" placeholder="Phone Number">
+</div>
+<textarea id="address" placeholder="Address"></textarea>
+<div class="button-row">
+    <button class="save-btn" onclick="saveCustomer()">💾 Save Details</button>
+    </div>
+
+<button class="order-btn" onclick="sendOrder()">
+        <img src="images/whatsapp.png" class="whatsapp-icon">
+    Place Order
+</button>
+</div>
+</div>
+
+</div>
+
+<script>
+fetch("https://script.google.com/macros/s/AKfycbwberw27fAdX2sOErBCrelJhuX63Z6GUWFlHFh7xh4NmiCGWX6FOQw078zto1x1-9Gkuw/exec")
+.then(res => res.json())
+.then(data => {
+
+let container=document.getElementById("productList");
+container.innerHTML="";
+
+data.forEach(p=>{
+
+container.innerHTML += `
+<div class="product ${p.category}">
+<img src="images/${p.image}">
+<h3>${p.name}</h3>
+<p>₹${p.price}</p>
+
+${p.stock && p.stock.trim().toLowerCase() === "no" ?
+"<p style='color:red;font-weight:bold'>Out of Stock</p>" :
+`
+<input type="number" id="q${p.id}" value="1" min="0.01" step="0.01">
+<button onclick="addToCart('${p.name}',${p.price},'q${p.id}')">Add</button>
+`
+}
+
+</div>
+`;
+});   // ✅ CLOSE forEach
+});   // ✅ CLOSE fetch
+
+let cart=[];
+let total=0;
+let whatsappNumber="917892646491";
+
+function addToCart(name, price, qtyId){
+    let qty=parseFloat(document.getElementById(qtyId).value);
+    if(qty<=0) return alert("Enter valid quantity");
+
+    let existing=cart.find(item=>item.name===name);
+    if(existing){
+        existing.qty+=qty;
+        existing.subtotal=existing.qty*existing.price;
+    }else{
+        cart.push({name,price,qty,subtotal:price*qty});
+    }
+
+    total=cart.reduce((sum,item)=>sum+item.subtotal,0);
+    updateCart();
+}
+
+function updateCart(){
+    let table=document.getElementById("cartTable");
+    table.innerHTML="";
+    cart.forEach((item,index)=>{
+        table.innerHTML+=`
+        <tr>
+        <td>${item.name}</td>
+        <td>${item.qty.toFixed(2)}</td>
+        <td>₹${item.price}</td>
+        <td>₹${item.subtotal.toFixed(2)}</td>
+        <td><button onclick="removeItem(${index})">X</button></td>
+        </tr>`;
+    });
+    document.getElementById("total").innerText=total;
+}
+
+function removeItem(index){
+    total-=cart[index].subtotal;
+    cart.splice(index,1);
+    updateCart();
+}
+
+function showCategory(cat){
+    document.querySelectorAll(".product").forEach(item=>{
+        item.style.display=(cat==="all"||item.classList.contains(cat))?"block":"none";
+    });
+}
+
+function searchItems(){
+    let input=document.getElementById("search").value.toLowerCase();
+    document.querySelectorAll(".product").forEach(item=>{
+        item.style.display=item.innerText.toLowerCase().includes(input)?"block":"none";
+    });
+}
+
+function sendOrder(){
+
+if(cart.length===0) return alert("Cart is empty!");
+
+let name=document.getElementById("name").value.trim();
+let address=document.getElementById("address").value.trim();
+let phone=document.getElementById("phone").value.trim();
+
+if(!name || !address || !phone){
+return alert("Fill all customer details!");
+}
+
+let message="🧾 *Green Vegetables & Fruits*\n";
+message+="📍 Shivamogga\n";
+message+="-----------------------------\n";
+message+="*Order Details*\n\n";
+
+cart.forEach((item,i)=>{
+
+message+=
+(i+1)+". "+item.name+
+"\n   Qty: "+item.qty+" kg"+
+"\n   Price: ₹"+item.price+
+"\n   Subtotal: ₹"+item.subtotal+"\n\n";
+
+});
+
+message+="-----------------------------\n";
+message+="💰 *Total: ₹"+total+"*\n";
+message+="-----------------------------\n";
+
+message+="👤 *Customer*\n";
+message+="Name: "+name+"\n";    
+message+="Phone: "+phone+"\n";
+message+="Address: "+address+"\n";
+
+if(userLocation){
+message += "📍 Location: " + userLocation + "\n";
+}
+saveOrderToSheet(name,phone,address,userLocation);
+let orderId = "ORD" + Date.now();
+message = "Order ID: " + orderId + "\n\n" + message;
+window.open("https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message));
+
+}
+function saveCustomer(){
+
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
+
+localStorage.setItem("customerName",name);
+localStorage.setItem("customerPhone",phone);
+localStorage.setItem("customerAddress",address);
+
+alert("Customer details saved!");
+}
+window.onload=function(){
+
+document.getElementById("name").value =
+localStorage.getItem("customerName") || "";
+
+document.getElementById("phone").value =
+localStorage.getItem("customerPhone") || "";
+
+document.getElementById("address").value =
+localStorage.getItem("customerAddress") || "";
+
+/* Automatically get location */
+getLocation();
+
+};
+let userLocation = localStorage.getItem("userLocation") || "";
+
+function getLocation(){
+
+// If location already saved, do not ask again
+if(userLocation){
+console.log("Location already saved:", userLocation);
+return;
+}
+
+if(navigator.geolocation){
+
+navigator.geolocation.getCurrentPosition(function(position){
+
+let lat = position.coords.latitude;
+let lon = position.coords.longitude;
+
+userLocation = "https://maps.google.com/?q=" + lat + "," + lon;
+
+// Save location for next visits
+localStorage.setItem("userLocation", userLocation);
+
+console.log("Location captured:", userLocation);
+
+}, function(){
+console.log("Location permission denied");
+});
+
+}else{
+console.log("Geolocation not supported");
+}
+
+}
+
+function saveOrderToSheet(name,phone,address,userLocation){
+
+const url="https://script.google.com/macros/s/AKfycbwGLsF9q1_zcIp3yEMlP7AHfKIUU-Fz4Tufcm3Amk9O0nNnIfw6J2Q4qfKzqcH2yl717w/exec";
+
+fetch(url,{
+method:"POST",
+mode:"no-cors",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+name:name,
+phone:phone,
+address:address,
+location:userLocation,
+items:cart
+})
+});
+
+}
+
+</script>
+
+
+
+</body>
+</html>

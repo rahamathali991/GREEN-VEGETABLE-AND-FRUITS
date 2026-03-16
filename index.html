@@ -468,7 +468,6 @@ let phone=document.getElementById("phone").value.trim();
 if(!name || !address || !phone){
 return alert("Fill all customer details!");
 }
-}
 
 let message="🧾 *Green Vegetables & Fruits*\n";
 message+="📍 Shivamogga\n";
@@ -497,15 +496,20 @@ message+="Address: "+address+"\n";
 if(userLocation){
 message += "📍 Location: " + userLocation + "\n";
 }
+
 saveOrderToSheet(name,phone,address,userLocation);
+
 let orderId = "ORD" + Date.now();
 message = "Order ID: " + orderId + "\n\n" + message;
+
 let url = "whatsapp://send?phone=" + whatsappNumber + "&text=" + encodeURIComponent(message);
 
 let win = window.open(url);
 
 if(!win){
-   window.location.href = "https://api.whatsapp.com/send?phone=" + whatsappNumber + "&text=" + encodeURIComponent(message);
+window.location.href="https://api.whatsapp.com/send?phone="+whatsappNumber+"&text="+encodeURIComponent(message);
+}
+
 }
 
 function saveCustomer(){

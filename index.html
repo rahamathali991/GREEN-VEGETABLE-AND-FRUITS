@@ -499,10 +499,14 @@ message += "📍 Location: " + userLocation + "\n";
 saveOrderToSheet(name,phone,address,userLocation);
 let orderId = "ORD" + Date.now();
 message = "Order ID: " + orderId + "\n\n" + message;
-let url = "https://api.whatsapp.com/send?phone=" + whatsappNumber + "&text=" + encodeURIComponent(message);
-window.location.href = url;
+let url = "whatsapp://send?phone=" + whatsappNumber + "&text=" + encodeURIComponent(message);
 
+let win = window.open(url);
+
+if(!win){
+   window.location.href = "https://api.whatsapp.com/send?phone=" + whatsappNumber + "&text=" + encodeURIComponent(message);
 }
+
 function saveCustomer(){
 
 let name=document.getElementById("name").value;

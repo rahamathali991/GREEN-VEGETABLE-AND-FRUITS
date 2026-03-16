@@ -72,9 +72,9 @@ nav button:hover {
 .products{
     flex:1;
     display:grid;
-    grid-auto-flow:column;
-    grid-template-rows:repeat(2, auto);
-    gap:10px;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:20px;
+}
     
     overflow-x:auto;   /* enables horizontal scroll */
     overflow-y:hidden;
@@ -95,12 +95,12 @@ nav button:hover {
 /* Product card */
 .product{
     background:white;
-    width:100px;           /* smaller width */
+    width:180px;
     border:2px solid green;
-    padding:5px;           /* less padding */
-    border-radius:6px;
+    padding:10px;
+    border-radius:10px;
     text-align:center;
-    font-size:12px;        /* smaller text */
+    font-size:14px;
 }
 .products::-webkit-scrollbar{
     height:6px;
@@ -112,10 +112,10 @@ nav button:hover {
 }
 /* Product image */
 .product img{
-    width:60px;            /* smaller image */
-    height:60px;
+    width:120px;
+    height:120px;
     object-fit:cover;
-    border-radius:5px;
+    border-radius:8px;
 }
 
 /* Product title */
@@ -497,7 +497,8 @@ message += "📍 Location: " + userLocation + "\n";
 saveOrderToSheet(name,phone,address,userLocation);
 let orderId = "ORD" + Date.now();
 message = "Order ID: " + orderId + "\n\n" + message;
-window.open("https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message));
+let url = "https://api.whatsapp.com/send?phone=" + whatsappNumber + "&text=" + encodeURIComponent(message);
+window.location.href = url;
 
 }
 function saveCustomer(){

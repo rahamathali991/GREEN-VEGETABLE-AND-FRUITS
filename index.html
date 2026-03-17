@@ -457,7 +457,7 @@ function searchItems(){
     });
 }
 
-function sendOrder(){
+async function sendOrder(){
 
 if(cart.length===0) return alert("Cart is empty!");
 
@@ -469,32 +469,30 @@ if(!name || !address || !phone){
 return alert("Fill all customer details!");
 }
 
+// 👉 Force get latest location
+await getLocation();
+
 let message="🧾 *Green Vegetables & Fruits*\n";
-message+="📍 Shivamogga\n";
-message+="-----------------------------\n";
-message+="*Order Details*\n\n";
+message+="📍 Shivamogga\n\n";
 
 cart.forEach((item,i)=>{
-
-message+=
-(i+1)+". "+item.name+
-"\n   Qty: "+item.qty+" kg"+
-"\n   Price: ₹"+item.price+
-"\n   Subtotal: ₹"+item.subtotal+"\n\n";
-
+message += (i+1)+". "+item.name+" - "+item.qty+"kg\n";
 });
 
-message+="-----------------------------\n";
-message+="💰 *Total: ₹"+total+"*\n";
-message+="-----------------------------\n";
-
-message+="👤 *Customer*\n";
-message+="Name: "+name+"\n";    
+message+="\nTotal: ₹"+total+"\n\n";
+message+="Name: "+name+"\n";
 message+="Phone: "+phone+"\n";
 message+="Address: "+address+"\n";
 
+// 👉 Now location will come
 if(userLocation){
 message += "📍 Location: " + userLocation + "\n";
+}else{
+message += "📍 Location: Not available\n";
+}
+
+let url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
+window.location.href = url;
 }
 
 saveOrderToSheet(name,phone,address,userLocation);
@@ -542,12 +540,7 @@ getLocation();
 let userLocation = localStorage.getItem("userLocation") || "";
 
 function getLocation(){
-
-// If location already saved, do not ask again
-if(userLocation){
-console.log("Location already saved:", userLocation);
-return;
-}
+return new Promise((resolve) => {
 
 if(navigator.geolocation){
 
@@ -558,21 +551,20 @@ let lon = position.coords.longitude;
 
 userLocation = "https://maps.google.com/?q=" + lat + "," + lon;
 
-// Save location for next visits
 localStorage.setItem("userLocation", userLocation);
 
-console.log("Location captured:", userLocation);
+resolve(userLocation);
 
 }, function(){
-console.log("Location permission denied");
+resolve(null);
 });
 
 }else{
-console.log("Geolocation not supported");
+resolve(null);
 }
 
+});
 }
-
 function saveOrderToSheet(name,phone,address,userLocation){
 
 const url="https://script.google.com/macros/s/AKfycbwGLsF9q1_zcIp3yEMlP7AHfKIUU-Fz4Tufcm3Amk9O0nNnIfw6J2Q4qfKzqcH2yl717w/exec";

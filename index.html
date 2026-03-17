@@ -542,6 +542,11 @@ resolve(userLocation);
 
 }, function(){
 resolve(null);
+},
+{
+    enableHighAccuracy: true,
+    timeout: 10000,
+    maximumAge: 0
 });
 
 }else{
@@ -550,6 +555,7 @@ resolve(null);
 
 });
 }
+
 function saveOrderToSheet(name,phone,address,userLocation){
 
 const url="https://script.google.com/macros/s/AKfycbwGLsF9q1_zcIp3yEMlP7AHfKIUU-Fz4Tufcm3Amk9O0nNnIfw6J2Q4qfKzqcH2yl717w/exec";

@@ -73,15 +73,15 @@ nav button:hover {
     flex:1;
     display:grid;
 
-    grid-auto-flow:column;          /* horizontal flow */
-    grid-template-rows:repeat(2, 1fr);   /* 2 rows */
+    grid-auto-flow:column;              /* horizontal scroll */
+    grid-template-rows:repeat(3, 1fr);  /* ✅ 3 rows */
 
-    gap:15px;
+    gap:12px;
 
-    overflow-x:auto;    /* horizontal scroll */
+    overflow-x:auto;
     overflow-y:hidden;
 
-    padding-bottom:10px;
+    padding:10px;
 }
 .products::-webkit-scrollbar{
     height:8px;
@@ -93,15 +93,16 @@ nav button:hover {
 }
 
 /* Product card */
-/* Product card */
 .product{
     background:white;
-    width:160px;
-    border:2px solid green;
-    padding:10px;
+    width:150px;              /* slightly smaller for 3 rows */
+    border:1.5px solid #2e7d32;
+    padding:8px;
     border-radius:10px;
     text-align:center;
-    font-size:14px;
+    font-size:13px;
+
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 .products::-webkit-scrollbar{
     height:6px;
@@ -113,8 +114,8 @@ nav button:hover {
 }
 /* Product image */
 .product img{
-    width:100px;
-    height:100px;
+    width:90px;
+    height:90px;
     object-fit:cover;
     border-radius:8px;
 }
@@ -135,28 +136,17 @@ nav button:hover {
 
 /* Quantity input */
 .product input{
-    width:70px;
+    width:60px;
+    padding:5px;
+    font-size:13px;
+}
+
+.product button{
     padding:6px;
-    margin-top:6px;
-    text-align:center;
-    font-size:14px;
-    border:1px solid #2e7d32;
-    border-radius:5px;
+    font-size:13px;
 }
 
 /* Add button */
-.product button{
-    margin-top:6px;
-    background:#2e7d32;
-    color:white;
-    border:none;
-    padding:8px 14px;
-    font-size:14px;
-    border-radius:6px;
-    cursor:pointer;
-    width:100%;
-}
-
 .product button:hover{
     opacity:0.9;
     transform:scale(1.05);
